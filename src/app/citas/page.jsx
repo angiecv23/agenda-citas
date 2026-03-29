@@ -26,21 +26,27 @@ export default function Citas() {
   };
 
   return (
-    <div>
-      <h1>Agenda de Citas 😎</h1>
+    <div className="container">
+        <h1>Agenda de Citas 😎</h1>
 
-      <AppointmentForm agregarCita={agregarCita} />
+        <AppointmentForm agregarCita={agregarCita} />
 
-      <ul>
-        {citas.map((cita, index) => (
-          <li key={index}>
-            {cita.nombre} - {cita.fecha}
+        {citas.length === 0 ? (
+        <p>No hay citas aún</p>
+        ) : (
+        citas.map((cita, index) => (
+            <div className="card" key={index}>
+            <div>
+                <strong>{cita.nombre}</strong>
+                <p>{cita.fecha}</p>
+            </div>
+
             <button onClick={() => eliminarCita(index)}>
-              Eliminar
+                Eliminar
             </button>
-          </li>
-        ))}
-      </ul>
+            </div>
+        ))
+        )}
     </div>
-  );
+    );
 }
