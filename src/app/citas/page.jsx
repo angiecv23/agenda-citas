@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [citas, setCitas] = useState([]);
@@ -19,11 +20,14 @@ export default function Home() {
       <h1>Dashboard 📊</h1>
 
       <div className="dashboard">
-        <div className="card-dashboard">
+
+        /* Card clickeable */
+        <Link href="/citas" className="card-dashboard">
           <h3>Total de Citas</h3>
           <p>{totalCitas}</p>
-        </div>
+        </Link>
 
+        /* Card info */
         <div className="card-dashboard">
           <h3>Última Cita</h3>
           {ultimaCita ? (
@@ -34,6 +38,7 @@ export default function Home() {
             <p>No hay citas</p>
           )}
         </div>
+
       </div>
     </div>
   );
