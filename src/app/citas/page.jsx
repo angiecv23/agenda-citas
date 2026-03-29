@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import AppointmentForm from "../../component/AppointmentForm";
 
-export default function Home() {
+export default function Citas() {
   const [citas, setCitas] = useState([]);
 
+  // cargar datos
   useEffect(() => {
     const data = localStorage.getItem("citas");
     if (data) {
@@ -12,34 +13,36 @@ export default function Home() {
     }
   }, []);
 
-  const totalCitas = citas.length;
-  const ultimaCita = citas[citas.length - 1];
+  // guardar datos
+  useEffect(() => {
+    localStorage.setItem("citas", JSON.stringify(citas));
+  }, [citas]);
+
+  // agregar cita
+  const agregarCita = (cita) => {
+    setCitas([...citas, cita]);
+  };
+
+  // eliminar cita
+  const eliminarCita = (index) => {
+    const nuevas = citas.filter((_, i) => i !== index);
+    setCitas(nuevas);
+  };
 
   return (
-    <div>
-      <h1>Dashboard 📊</h1>
+    <div className="container">
+      <h1>Agenda de Citas 📅</h1>
 
-      <div className="dashboard">
+      <AppointmentForm agregarCita={agregarCita} />
 
-        /* Card clickeable */
-        <Link href="/citas" className="card-dashboard">
-          <h3>Total de Citas</h3>
-          <p>{totalCitas}</p>
-        </Link>
-
-        /* Card info */
-        <div className="card-dashboard">
-          <h3>Última Cita</h3>
-          {ultimaCita ? (
-            <p>
-              {ultimaCita.nombre} - {ultimaCita.fecha}
-            </p>
-          ) : (
-            <p>No hay citas</p>
-          )}
+      {citas.map((cita, index) => (
+        <div key={index} className="card">
+          <div>
+            <strong>{cita.nombre}</strong> - {cita.fecha}
+          </div>
+          <button onClick={() => eliminarCita(index)}>Eliminar</button>
         </div>
-
-      </div>
+      ))}
     </div>
   );
 }
