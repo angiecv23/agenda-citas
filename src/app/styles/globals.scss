@@ -36,7 +36,7 @@ button {
 }
 
 button:hover {
-  background: #005bb5;
+  background: #950fa7ec;
 }
 
 .card {
@@ -47,4 +47,35 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.layout {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
 }
