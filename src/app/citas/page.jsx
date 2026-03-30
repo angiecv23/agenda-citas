@@ -4,7 +4,7 @@ import AppointmentForm from "../../component/AppointmentForm";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
-
+  const [editIndex, setEditIndex] = useState(null);
   // cargar datos
   useEffect(() => {
     const data = localStorage.getItem("citas");
@@ -20,13 +20,36 @@ export default function Citas() {
 
   // agregar cita
   const agregarCita = (cita) => {
-    setCitas([...citas, cita]);
+    if (editIndex !== null) {
+      const nuevas = [...citas];
+      nuevas[editIndex] = cita;
+      setCitas(nuevas);
+      setEditIndex(null);
+    } else {
+      setCitas([...citas, cita]);
+    }
   };
 
   // eliminar cita
   const eliminarCita = (index) => {
     const nuevas = citas.filter((_, i) => i !== index);
     setCitas(nuevas);
+  };
+
+  // editar cita
+  const editarCita = (index) => {
+    const nuevaNombre = prompt("Nuevo nombre:", citas[index].nombre);
+    const nuevaFecha = prompt("Nueva fecha:", citas[index].fecha);
+
+    if (!nuevaNombre || !nuevaFecha) return;
+
+    const nuevasCitas = [...citas];
+    nuevasCitas[index] = {
+      nombre: nuevaNombre,
+      fecha: nuevaFecha,
+    };
+
+    setCitas(nuevasCitas);
   };
 
   return (
@@ -40,7 +63,11 @@ export default function Citas() {
           <div>
             <strong>{cita.nombre}</strong> - {cita.fecha}
           </div>
-          <button onClick={() => eliminarCita(index)}>Eliminar</button>
+
+          <div>
+            <button onClick={() => editarCita(index)}>Editar</button>
+            <button onClick={() => eliminarCita(index)}>Eliminar</button>
+          </div>
         </div>
       ))}
     </div>
