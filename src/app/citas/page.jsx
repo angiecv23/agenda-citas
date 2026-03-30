@@ -5,6 +5,7 @@ import AppointmentForm from "../../component/AppointmentForm";
 export default function Citas() {
   const [citas, setCitas] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  
   // cargar datos
   useEffect(() => {
     const data = localStorage.getItem("citas");
@@ -64,7 +65,7 @@ export default function Citas() {
             <strong>{cita.nombre}</strong> - {cita.fecha}
           </div>
 
-          <div>
+          <div className="actions">
             <button onClick={() => editarCita(index)}>Editar</button>
             <button onClick={() => eliminarCita(index)}>Eliminar</button>
           </div>
