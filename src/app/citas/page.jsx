@@ -27,15 +27,18 @@ export default function Citas() {
   };
 
   const editarCita = (index) => {
-    const nuevaNombre = prompt("Nuevo nombre:", citas[index].nombre);
+    const nuevaTitulo = prompt("Nuevo título:", citas[index].titulo);
     const nuevaFecha = prompt("Nueva fecha:", citas[index].fecha);
+    const nuevaHora = prompt("Nueva hora:", citas[index].hora);
 
-    if (!nuevaNombre || !nuevaFecha) return;
+    if (!nuevaTitulo || !nuevaFecha || !nuevaHora) return;
 
     const nuevasCitas = [...citas];
     nuevasCitas[index] = {
-      nombre: nuevaNombre,
+      ...citas[index],
+      titulo: nuevaTitulo,
       fecha: nuevaFecha,
+      hora: nuevaHora,
     };
 
     setCitas(nuevasCitas);
@@ -50,7 +53,11 @@ export default function Citas() {
       {citas.map((cita, index) => (
         <div key={index} className="card">
           <div>
-            <strong>{cita.nombre}</strong> - {cita.fecha}
+            <strong>{cita.titulo}</strong>
+            <p>📅 {cita.fecha}</p>
+            <p>⏰ {cita.hora}</p>
+            <p>🏷️ {cita.categoria}</p>
+            <p>{cita.descripcion}</p>
           </div>
 
           <div className="actions">
