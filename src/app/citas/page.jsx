@@ -1,12 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import AppointmentForm from "../../component/AppointmentForm";
+import Button from "../../components/Button";
+import AppointmentForm from "../../components/AppointmentForm";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
-  
-  // cargar datos
+
   useEffect(() => {
     const data = localStorage.getItem("citas");
     if (data) {
@@ -14,30 +13,19 @@ export default function Citas() {
     }
   }, []);
 
-  // guardar datos
   useEffect(() => {
     localStorage.setItem("citas", JSON.stringify(citas));
   }, [citas]);
 
-  // agregar cita
   const agregarCita = (cita) => {
-    if (editIndex !== null) {
-      const nuevas = [...citas];
-      nuevas[editIndex] = cita;
-      setCitas(nuevas);
-      setEditIndex(null);
-    } else {
-      setCitas([...citas, cita]);
-    }
+    setCitas([...citas, cita]);
   };
 
-  // eliminar cita
   const eliminarCita = (index) => {
     const nuevas = citas.filter((_, i) => i !== index);
     setCitas(nuevas);
   };
 
-  // editar cita
   const editarCita = (index) => {
     const nuevaNombre = prompt("Nuevo nombre:", citas[index].nombre);
     const nuevaFecha = prompt("Nueva fecha:", citas[index].fecha);
@@ -66,8 +54,8 @@ export default function Citas() {
           </div>
 
           <div className="actions">
-            <button onClick={() => editarCita(index)}>Editar</button>
-            <button onClick={() => eliminarCita(index)}>Eliminar</button>
+            <Button onClick={() => editarCita(index)}>Editar</Button>
+            <Button onClick={() => eliminarCita(index)}>Eliminar</Button>
           </div>
         </div>
       ))}
