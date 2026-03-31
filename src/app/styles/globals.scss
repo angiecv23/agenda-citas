@@ -14,29 +14,29 @@ h1 {
   padding: 20px;
 }
 
-form {
+.form {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-input {
+.form input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
 
-button {
-  padding: 10px 15px;
+.btn {
+  padding: 8px 12px;
   border: none;
   background: #0070f3;
   color: white;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #950fa7ec;
+.btn:hover {
+  background: #005bb5;
 }
 
 .card {
