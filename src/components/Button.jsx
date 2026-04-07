@@ -3,5 +3,6 @@ export default function Button({ children, onClick }) {
     <button onClick={onClick} className="btn">
       {children}
     </button>
+    
   );
 }
