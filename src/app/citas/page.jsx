@@ -1,54 +1,60 @@
 "use client";
 import { useState, useEffect } from "react";
 import Button from "../../components/Button";
-import AppointmentForm from "../../components/AppointmentForm";
+import Link from "next/link";
 
 export default function Citas() {
   const [citas, setCitas] = useState([]);
-  const [busqueda, setBusqueda] = useState(""); 
+  const [busqueda, setBusqueda] = useState("");
   const [filtro, setFiltro] = useState("todas");
-  
+
   useEffect(() => {
     const data = localStorage.getItem("citas");
-    if (data) {
-      setCitas(JSON.parse(data));
-    }
+    if (data) setCitas(JSON.parse(data));
   }, []);
 
   useEffect(() => {
     localStorage.setItem("citas", JSON.stringify(citas));
   }, [citas]);
 
-  const agregarCita = (cita) => {
-    setCitas([...citas, cita]);
+  const agregarID = (cita) => ({
+    id: Date.now(),
+    ...cita,
+  });
+
+  const eliminarCita = (id) => {
+    setCitas(citas.filter((c) => c.id !== id));
   };
 
-  const eliminarCita = (index) => {
-    const nuevas = citas.filter((_, i) => i !== index);
+  const editarCita = (id) => {
+    const cita = citas.find((c) => c.id === id);
+
+    const titulo = prompt("Nuevo título:", cita.titulo);
+    const fecha = prompt("Nueva fecha:", cita.fecha);
+    const hora = prompt("Nueva hora:", cita.hora);
+
+    if (!titulo || !fecha || !hora) return;
+
+    const nuevas = citas.map((c) =>
+      c.id === id ? { ...c, titulo, fecha, hora } : c
+    );
+
     setCitas(nuevas);
   };
 
-  const editarCita = (index) => {
-    const nuevaTitulo = prompt("Nuevo título:", citas[index].titulo);
-    const nuevaFecha = prompt("Nueva fecha:", citas[index].fecha);
-    const nuevaHora = prompt("Nueva hora:", citas[index].hora);
-
-    if (!nuevaTitulo || !nuevaFecha || !nuevaHora) return;
-
-    const nuevasCitas = [...citas];
-    nuevasCitas[index] = {
-      ...citas[index],
-      titulo: nuevaTitulo,
-      fecha: nuevaFecha,
-      hora: nuevaHora,
-    };
-
-    setCitas(nuevasCitas);
-  };
+  const citasFiltradas = citas
+    .filter((c) =>
+      (c.titulo || "").toLowerCase().includes(busqueda.toLowerCase())
+    )
+    .filter((c) => (filtro === "todas" ? true : c.categoria === filtro));
 
   return (
     <div className="container">
       <h1>Historial de Citas 📅</h1>
+
+      <Link href="/nueva-cita" className="btn">
+        + Nueva Cita
+      </Link>
 
       <input
         type="text"
@@ -58,10 +64,7 @@ export default function Citas() {
       />
 
       <div className="filtros">
-        <select
-          value={filtro}
-          onChange={(e) => setFiltro(e.target.value)}
-        >
+        <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
           <option value="todas">Todas</option>
           <option value="trabajo">Trabajo</option>
           <option value="personal">Personal</option>
@@ -69,13 +72,8 @@ export default function Citas() {
         </select>
       </div>
 
-      {citas.filter((cita) =>
-          cita.titulo.toLowerCase().includes(busqueda.toLowerCase())
-        ).filter((cita) =>
-          filtro === "todas" ? true : cita.categoria === filtro
-        )
-        .map((cita, index) => (
-        <div key={index} className={`card ${cita.categoria}`}>
+      {citasFiltradas.map((cita) => (
+        <div key={cita.id} className={`card ${cita.categoria}`}>
           <div>
             <strong>{cita.titulo}</strong>
             <p>📅 {cita.fecha}</p>
@@ -85,8 +83,8 @@ export default function Citas() {
           </div>
 
           <div className="actions">
-            <Button onClick={() => editarCita(index)}>Editar</Button>
-            <Button onClick={() => eliminarCita(index)}>Eliminar</Button>
+            <Button onClick={() => editarCita(cita.id)}>Editar</Button>
+            <Button onClick={() => eliminarCita(cita.id)}>Eliminar</Button>
           </div>
         </div>
       ))}
