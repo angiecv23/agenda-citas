@@ -144,6 +144,28 @@ h1 {
   box-shadow: 0 0 5px rgba(0,112,243,0.3);
 }
 
+.react-calendar {
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+/* día seleccionado */
+.react-calendar__tile--active {
+  background: #0070f3 !important;
+  color: white;
+  border-radius: 8px;
+}
+
+/* hover */
+.react-calendar__tile:hover {
+  background: #eee;
+  border-radius: 8px;
+}
+
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .sidebar {

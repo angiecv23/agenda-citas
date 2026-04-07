@@ -58,12 +58,16 @@ export default function Citas() {
       />
 
       <div className="filtros">
-        <button onClick={() => setFiltro("todas")}>Todas</button>
-        <button onClick={() => setFiltro("trabajo")}>Trabajo</button>
-        <button onClick={() => setFiltro("personal")}>Personal</button>
-        <button onClick={() => setFiltro("estudio")}>Estudio</button>
+        <select
+          value={filtro}
+          onChange={(e) => setFiltro(e.target.value)}
+        >
+          <option value="todas">Todas</option>
+          <option value="trabajo">Trabajo</option>
+          <option value="personal">Personal</option>
+          <option value="estudio">Estudio</option>
+        </select>
       </div>
-
 
       {citas.filter((cita) =>
           cita.titulo.toLowerCase().includes(busqueda.toLowerCase())
