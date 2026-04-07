@@ -12,6 +12,9 @@ export default function Sidebar() {
           <li>
             <Link href="/citas">Citas</Link>
           </li>
+          <li>
+            <Link href="/perfil">Perfil</Link>
+          </li>
         </ul>
       </nav>
     </aside>
