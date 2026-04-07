@@ -10,10 +10,10 @@ export default function Sidebar() {
             <Link href="/">Inicio</Link>
           </li>
           <li>
-            <Link href="/citas">Registr Citas</Link>
+            <Link href="/citas">Historial</Link>
           </li>
           <li>
-            <Link href="/perfil">Historial de Citas</Link>
+            <Link href="/nueva-cita">Nueva Cita</Link>
           </li>
         </ul>
       </nav>

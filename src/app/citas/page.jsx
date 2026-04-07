@@ -6,7 +6,8 @@ import AppointmentForm from "../../components/AppointmentForm";
 export default function Citas() {
   const [citas, setCitas] = useState([]);
   const [busqueda, setBusqueda] = useState(""); 
-
+  const [filtro, setFiltro] = useState("todas");
+  
   useEffect(() => {
     const data = localStorage.getItem("citas");
     if (data) {
@@ -47,7 +48,7 @@ export default function Citas() {
 
   return (
     <div className="container">
-      <h1>Agenda de Personal 📅</h1>
+      <h1>Historial de Citas 📅</h1>
 
       <input
         type="text"
@@ -55,7 +56,7 @@ export default function Citas() {
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
       />
-      
+
       <div className="filtros">
         <button onClick={() => setFiltro("todas")}>Todas</button>
         <button onClick={() => setFiltro("trabajo")}>Trabajo</button>
@@ -63,13 +64,14 @@ export default function Citas() {
         <button onClick={() => setFiltro("estudio")}>Estudio</button>
       </div>
 
-      <AppointmentForm agregarCita={agregarCita} />
 
       {citas.filter((cita) =>
           cita.titulo.toLowerCase().includes(busqueda.toLowerCase())
+        ).filter((cita) =>
+          filtro === "todas" ? true : cita.categoria === filtro
         )
         .map((cita, index) => (
-        <div key={index} className="card">
+        <div key={index} className={`card ${cita.categoria}`}>
           <div>
             <strong>{cita.titulo}</strong>
             <p>📅 {cita.fecha}</p>

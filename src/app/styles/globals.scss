@@ -122,6 +122,28 @@ h1 {
   transform: translateY(-8px) scale(1.02);
 }
 
+.filtros select {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+
+/* hover */
+.filtros select:hover {
+  border-color: #0070f3;
+}
+
+/* focus */
+.filtros select:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 5px rgba(0,112,243,0.3);
+}
+
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .sidebar {
